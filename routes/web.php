@@ -20,9 +20,11 @@ use Bulkly\SocialAccounts;
 use Bulkly\RssAutoPost;
 use Bulkly\BufferPosting;
 use GuzzleHttp\Exception\ClientException;
+//use Symfony\Component\Routing\Route;
 
+use Illuminate\Support\Facades\Route;
 
-Route::get('/user/invoice/{invoice}', function (Request $request, $invoiceId) {
+ Route::get('/user/invoice/{invoice}', function (Request $request, $invoiceId) {
     return $request->user()->downloadInvoice($invoiceId, [
         'vendor'  => 'Bulk.ly',
         'product' => 'Subscription Payment',
@@ -50,20 +52,8 @@ Route::get('/group-test/{id}', function(Request $request, $id){
 
         }
         dump($rsspostsarray[0]);
-
-
-
-
-
-
     }
-
-
-
-
-
-
-});
+}); 
 
 
 
@@ -71,6 +61,11 @@ Route::get('/group-test/{id}', function(Request $request, $id){
 
 
 Auth::routes();
+
+//added by rana
+Route::get('/posts', 'PostController@index')->name('posts');
+Route::post('/posts', 'PostController@index')->name('posts');
+
 Route::post('stripe/webhook', '\Bulkly\Http\Controllers\WebhookController@handleWebhook');
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/buffer/change/{buffer_id}', 'HomeController@bufferChange')->name('bufferChange');
